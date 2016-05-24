@@ -1,0 +1,11 @@
+{
+    "name": "bot_write_tab_customize",
+    "description": "Rearrange and style items in the Textpattern v4.6 write tab",
+    "version": "0.7.5",
+    "type": 3,
+    "author": "redbot (additions by mrdale + jcr)",
+    "author_uri": "http://www.redbot.it/txp/",
+    "order": 5,
+    "flags": 2,
+    "help": {"file" : ["./README.textile"]}
+}
