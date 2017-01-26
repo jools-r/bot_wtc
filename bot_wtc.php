@@ -775,7 +775,7 @@ function bot_wtc_tab($event, $step)
 
   // add some jquery action
 	echo
-	'<script  type="text/javascript">'.n.
+	'<script>'.n.
 	'	$(document).ready(function() {'.n.
 			'$("div.bot_collapse").hide()'.n.
 			'$("section#bot_advanced").hide()'.n.
@@ -980,7 +980,7 @@ function bot_hide_per_section()
 	// output js only if values exist
 	if ($bot_hide_per_section) {
 		 	echo
-				'<script  type="text/javascript">'.n.
+				'<script>'.n.
 				'	$(document).ready(function() {'.n;
 			echo
 				'		$("select#section").change(function(){'.n;
@@ -1014,7 +1014,7 @@ function bot_hidden_sections()
 	if ($bot_hidden_sections) {
 		$sections = explode("|", $bot_hidden_sections);
 		echo
-		'<script  type="text/javascript">'.n.
+		'<script>'.n.
 		'	$(document).ready(function() {'.n;
 		foreach ($sections as $value) {
 			echo    '           $("select#section option:not(:selected)[value=\''.$value.'\']").remove();'.n;
@@ -1069,7 +1069,7 @@ function bot_wtc()
 	// output code only if a preference is saved
 	if(isset($position) || isset($class)){
 		echo
-		'<script  type="text/javascript">'.n.
+		'<script>'.n.
 		'	$(document).ready(function() {'.n.
 				bot_wtc_jquery_rows().n.
 		'	});'.n.
