@@ -814,6 +814,7 @@ function bot_wtc_tab($event, $step)
 			'  $("#bot_wtc_script").val(areaValue + "'.$bot_js_snippet.'");'.n.
 			'  return(false);'.n.
   			'});'.n.
+  		'$(".not-ready").removeClass("not-ready");'.n.
 	'	});'.n.
 	'</script>';
 }
