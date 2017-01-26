@@ -434,7 +434,7 @@ function bot_wtc_output_rows()
 		td(selectInput('new_item',bot_contextual_selectinput(), '', '1'), '', 'bot_hilight')
 		.td(selectInput('new_item_position', $selectInput_for_position, '', '1'))
 		.td(selectInput('new_item_destination',bot_all_items_selectinput(), '', '1'))
-		.td('<p><a href="#" class="bot_push">'.gTxt("tag_section_list").'</a></p><div class="bot_collapse">'.$new_item_sections_rows.'</div>')
+		.td('<p><a href="#" class="bot_push">'.gTxt("tag_section_list").'<span class="ui-icon ui-icon-caret-1-s"></span></a></p><div class="bot_collapse">'.$new_item_sections_rows.'</div>')
 		.td(finput('text','new_item_class', ''))
 		.td()
 		);
@@ -456,7 +456,7 @@ function bot_wtc_output_rows()
 			td(selectInput('item[]',bot_contextual_selectinput($db_values[$i]['item']), $db_values[$i]['item'],'0'), '', 'bot_hilight')
 			.td(selectInput('item_position[]', $selectInput_for_position, $db_values[$i]['position'], '1'))
 			.td(selectInput('item_destination[]',bot_all_items_selectinput(), $db_values[$i]['destination'],'1'))
- 			.td('<p><a href="#" class="bot_push">'.gTxt("tag_section_list").'</a></p><div class="bot_collapse">'.$item_sections_rows.'</div>')
+ 			.td('<p><a href="#" class="bot_push">'.gTxt("tag_section_list").'<span class="ui-icon ui-icon-caret-1-s"></span></a></p><div class="bot_collapse">'.$item_sections_rows.'</div>')
 			.td(finput('text', 'item_class[]', $db_values[$i]['class']))
 			.td(checkbox('bot_delete_id[]', $db_values[$i]['id'], '0').'<label for="bot_delete_id"> '.gTxt('delete').'</label>'))
 			.hInput('bot_wtc_id[]', $db_values[$i]['id']);
@@ -888,7 +888,10 @@ function bot_wtc_css() {
 				background:#eaeaea
 			}
 			a.bot_push {
-				font-weight:bold; background: url(txp_img/arrowupdn.gif) no-repeat right bottom; padding-right:13px;
+				font-weight:bold; padding-right:13px;
+			}
+			a.bot_push.bot_arrow span.ui-icon {
+			  background-position: 0 0;
 			}
 			#bot_warning {
 				text-align:center; background:#990000; color:#fff; margin: 20px auto; padding:10px; text-shadow:none;
