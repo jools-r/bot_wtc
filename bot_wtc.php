@@ -23,7 +23,7 @@ if (@txpinterface == 'admin') {
 }
 
 // ===========================================
-// Array of parts of Write Tab UI items
+// Array of Write Panel UI items
 // Key: gTxt name => Value: Jquery selector query
 
 $bot_arr_selectors = array(
@@ -31,67 +31,67 @@ $bot_arr_selectors = array(
     'writetab_main_content' => '$("#main_content")',
 
         'writetab_view_modes' => '$("#view_modes")',
-        'title' => '$(".title")',
-        'author' => '$(".author")',
-        'body' => '$(".body")',
-        'excerpt' => '$(".excerpt")',
-        'article_markup' => '$(".body .txp-textfilter-options")',
-        'excerpt_markup' => '$(".excerpt .txp-textfilter-options")',
-        'textile_help' => '$(".textfilter-help")',
+        'title'               => '$(".title")',
+        'author'              => '$(".author")',
+        'body'                => '$(".body")',
+        'excerpt'             => '$(".excerpt")',
+        'article_markup'      => '$(".body .txp-textfilter-options")',
+        'excerpt_markup'      => '$(".excerpt .txp-textfilter-options")',
+        'textile_help'        => '$(".textfilter-help")',
 
     'writetab_sidebar' => '$("#supporting_content")',
 
-        'save' => '$(".txp-save")',
+        'save'                => '$(".txp-save")',
 
-        'actions' => '$("#txp-article-actions")',
+        'actions'             => '$("#txp-article-actions")',
 
-            'create_new' => '$(".txp-new")',
-            'duplicate' => '$(".txp-clone")',
-            'view' => '$(".txp-article-view")',
+            'create_new'      => '$(".txp-new")',
+            'duplicate'       => '$(".txp-clone")',
+            'view'            => '$(".txp-article-view")',
 
         'page_article_nav_hed' => '$(".nav-tertiary")',
 
-        'sort_display' => '$("#txp-write-sort-group")',
+        'sort_display'        => '$("#txp-write-sort-group")',
 
-            'status' => '$(".status")',
-            'section' => '$(".section")',
+            'status'          => '$(".status")',
+            'section'         => '$(".section")',
             'override_default_form' => '$(".override-form")',
 
-        'date_settings' => '$("#txp-dates-group")',
+        'date_settings'       => '$("#txp-dates-group")',
 
-            'publish' => '$("#publish-datetime-group")',
-            'publish_date' => '$(".posted.date")',
-            'publish_time' => '$(".posted.time")',
-            'reset_time' => '$(".reset-time")',
+            'publish'         => '$("#publish-datetime-group")',
+            'publish_date'    => '$(".posted.date")',
+            'publish_time'    => '$(".posted.time")',
+            'reset_time'      => '$(".reset-time")',
 
-            'expired' => '$("#expires-datetime-group")',
-            'expire_date' => '$(".expires.date")',
-            'expire_time' => '$(".expires.time")',
-            'expire_now' => '$(".expire-now")',
+            'expired'         => '$("#expires-datetime-group")',
+            'expire_date'     => '$(".expires.date")',
+            'expire_time'     => '$(".expires.time")',
+            'expire_now'      => '$(".expire-now")',
 
-        'categories' =>  '$("#txp-categories-group")',
+        'categories'          =>  '$("#txp-categories-group")',
 
-            'category1' => '$(".category-1")',
-            'category2' => '$(".category-2")',
+            'category1'       => '$(".category-1")',
+            'category2'       => '$(".category-2")',
 
-        'meta' => '$("#txp-meta-group")',
+        'meta'                => '$("#txp-meta-group")',
 
-            'url_title' => '$(".url-title")',
-            'description' => '$(".description")',
-            'keywords' => '$(".keywords")',
+            'url_title'       => '$(".url-title")',
+            'description'     => '$(".description")',
+            'keywords'        => '$(".keywords")',
 
-        'comment_settings' => '$("#txp-comments-group")',
+        'comment_settings'    => '$("#txp-comments-group")',
 
-            'use_comments' => '$(".comments-annotate")',
+            'use_comments'    => '$(".comments-annotate")',
             'comment_invitation' => '$(".comment-invite")',
 
         'article_image_group' => '$("#txp-image-group")',
 
-            'article_image' => '$(".article-image")',
+            'article_image'   => '$(".article-image")',
 
-        'custom' => '$("#txp-custom-field-group")',
+        'custom'              => '$("#txp-custom-field-group")',
 
-        'recent_articles' => '$("#txp-recent-group")'
+        'recent_articles'     => '$("#txp-recent-group")'
 
 );
 
@@ -161,17 +161,11 @@ function bot_get_cfs()
     if ($r) {
         global $arr_custom_fields;
         while ($a = nextRow($r)) {
-//            $name = str_replace('_set', '', $a['name']);
+            // Convert custom_XX_set into custom-XX
             $name = str_replace('_', '-', substr($a['name'], 0, -4));
             $html = $a['html'];
             $selector = '$(".'.$name.'")';
-/*
-            if ($html == 'checkbox' || $html == 'multi-select') {
-                $selector = '$("p:has(*[name=\''.$name.'[]\'])")';
-            } else {
-                $selector = '$("p:has(*[name=\''.$name.'\'])")';
-            }
-*/
+
             // If glz_cf_gtxt function exists, use custom_field title if one exists
             $cf_title = (function_exists('glz_cf_gtxt')) ? glz_cf_gtxt($a['val']) : '';
             $val = (!empty($cf_title)) ? $cf_title : $a['val'];
@@ -348,10 +342,11 @@ function bot_wtc_check_install()
 function bot_all_items_selectinput()
 {
     global $bot_items;
-
-    $cfs = bot_get_cfs(); // Get cfs array in the form: cf_selector => cf_name
+    // Get cfs array in the form: cf_selector => cf_name
+    $cfs = bot_get_cfs();
     // Final values for the txp function selectInput (including cfs if any)
-    if (is_array($cfs)) { // If there is at least one custom field set adds cfs to $bot_items array
+    // If there is at least one custom field set adds cfs to $bot_items array
+    if (is_array($cfs)) {
         $all_items_select = array_merge($cfs, $bot_items);
     } else {
         $all_items_select = $bot_items;
@@ -362,17 +357,18 @@ function bot_all_items_selectinput()
 
 
 //===========================================
-
-// outputs only 'not-yet-used' items for selectInput() (used for items dropdown)
+// Outputs only 'not-yet-used' items for selectInput() (used for items dropdown)
 
 function bot_contextual_selectinput($current = "")
 {
     global $bot_items;
 
-    $db_values = bot_wtc_fetch_db(); // Array of values from the db
+    // Array of values from the db
+    $db_values = bot_wtc_fetch_db();
     $all_items = bot_all_items_selectinput();
     if (bot_wtc_check_install()) {
-        $used_items = safe_column('item', 'bot_wtc', '1=1'); // Numeric array of item values from the db
+        // Numeric array of item values from the db
+        $used_items = safe_column('item', 'bot_wtc', '1=1');
         foreach ($all_items as $item => $title) {
             if (!in_array($item, $used_items)) {
                 $items_selectInput[$item] = $title;
@@ -381,7 +377,8 @@ function bot_contextual_selectinput($current = "")
     } else {
         $items_selectInput = $all_items;
     }
-    if ($current) { // if the parameter is given adds current value to array
+    // If the parameter is given adds current value to array
+    if ($current) {
         $items_selectInput[$current] = $all_items[$current];
     }
     return  $items_selectInput;
@@ -400,20 +397,20 @@ function bot_wtc_output_rows()
     global $bot_items;
 
     $selectInput_for_position = array('insertBefore'=>gTxt('bot_wtc_before'),'insertAfter'=>gTxt('bot_wtc_after')); // position values for the txp function selectInput
-    $db_values = bot_wtc_fetch_db(); // array of values from the db
+    // Array of values from the db
+    $db_values = bot_wtc_fetch_db();
 
     $destination_selectInput = bot_all_items_selectinput();
     $items_selectInput = bot_contextual_selectinput();
 
     // Builds rows for new item sections list
-    $sections= bot_get_sections(); // get sections array
+    $sections= bot_get_sections(); // Get sections array
     $new_item_sections_rows = '';
     foreach ($sections as $key => $value) {
         $new_item_sections_row = '<div class="txp-form-checkbox">'.
             n.checkbox('new_item_sections[]', $key, '0', 0, $key).
             n.tag($value, 'label', array('for' => $key)).
             n.'</div>';
-//        $new_item_sections_row = '<label>'.checkbox('new_item_sections[]', $key, '0').$value.'</label><br />';
         $new_item_sections_rows .= $new_item_sections_row;
     }
     $new_item_sections_rows .= '<p ><a href="#" class="bot_all">'.gTxt("all").'</a> | <a href="#" class="bot_none">'.gTxt("none").'</a></p>'; // hide all/none
@@ -436,7 +433,8 @@ function bot_wtc_output_rows()
             // data for "sections to show" selectinput - decides wether a section is checked or not
             $bot_hide_in_this_sections_array = explode('|', $db_values[$i]['sections']);
             $item_sections_rows = '';
-            foreach ($sections as $key => $value) { // if section is in db mark as checked
+            // If section is in db mark as checked
+            foreach ($sections as $key => $value) {
                 $checked = in_array($key, $bot_hide_in_this_sections_array) ? '1': '0';
                 $item_sections_row = '<div class="txp-form-checkbox">'.
                     n.checkbox('bot_wtc_sections_for_id_'.$db_values[$i]['id'].'[]', $key, $checked, 0, $key).
@@ -473,13 +471,15 @@ function bot_wtc_output_rows()
 
 function bot_wtc_static_sections_select()
 {
-    // get sections array
+    // Get sections array
     $sections= bot_get_sections();
-    $static_sections = safe_field('val', 'txp_prefs', 'name = "bot_wtc_static_sections"'); //  fetch prefs value for bot_wtc_static_sections
-    $static_sections = explode('|', $static_sections); // creates an array of statica sections from the string in txp_prefs
+    // Fetch prefs value for bot_wtc_static_sections
+    $static_sections = safe_field('val', 'txp_prefs', 'name = "bot_wtc_static_sections"');
+    // Creates an array of static sections from the string in txp_prefs
+    $static_sections = explode('|', $static_sections);
     $static_sections_rows = '';
     foreach ($sections as $key => $value) {
-        // if section is in db mark as checked
+        // If section is in db mark as checked
         $checked = in_array($key, $static_sections) ? '1': '0';
         $static_sections_row = '<div class="txp-form-checkbox">'.
             n.checkbox('static_sections[]', $key, $checked, 0, $key).
@@ -498,7 +498,8 @@ function bot_wtc_static_sections_select()
 function bot_advanced()
 {
     global $bot_items;
-    $items = bot_all_items_selectinput(); // get items array
+    // Get items array
+    $items = bot_all_items_selectinput();
     $item_rows = '';
     foreach ($items as $key => $value) {
         $item_row = '<div class="txp-form-checkbox">'.
@@ -506,7 +507,8 @@ function bot_advanced()
             n.tag($value, 'label', array('for' => $value)).
             n.'</div>';
         $item_rows .= $item_row;
-        $sections= bot_get_sections(); // get sections array
+        // Get sections array
+        $sections= bot_get_sections();
     }
     $sections_rows = '';
     foreach ($sections as $key => $value) {
@@ -565,22 +567,24 @@ function bot_wtc_tab($event, $step, $msg='')
         $bot_adv_class = ps('bot_adv_class'); //variable
 
         // db update for existing items
-        if ($item) { // if at least a saved item exists
 
-               $db_values = bot_wtc_fetch_db(); // array of values from the db
+        // If at least a saved item exists
+        if ($item) {
+            // Array of values from the db
+            $db_values = bot_wtc_fetch_db();
             for ($i = 0; $i < count($item); $i++) {
-                // builds the posted variable name for current item sections
+                // Builds the posted variable name for current item sections
                 $item_posted_sections_name = 'bot_wtc_sections_for_id_'.$db_values[$i]['id'];
                 $item_sections = isset($_POST[$item_posted_sections_name]) ? $_POST[$item_posted_sections_name] : ''; //array
-                // builds sections string for current item
+                // Builds sections string for current item
                 $item_sections_string = $item_sections ? implode('|', $item_sections): '';
-                // allowed input data combinations
+                // Allowed input data combinations
                 if (($item[$i] && $item_destination[$i] && $item_position[$i])
                 || ($item[$i] && $item_class[$i] && !$item_destination[$i] && !$item_position[$i])
                 || ($item[$i] && $item_sections_string && !$item_destination[$i] && !$item_position[$i])) {
-                    // check if a column/region is linked with a non-column item BUT ONLY IF both items are set (otherwise couldn't apply i.e. class to a single region)
+                    // Check if a column/region is linked with a non-column item BUT ONLY IF both items are set (otherwise couldn't apply i.e. class to a single region)
                     if (!((bot_wtc_is_region($item[$i]) xor bot_wtc_is_region($item_destination[$i])) && $item_destination[$i])) {
-                        // check if item is different from destination
+                        // Check if item is different from destination
                         if ($item[$i] != $item_destination[$i]) {
                             safe_update(
                                 "bot_wtc",
@@ -604,15 +608,16 @@ function bot_wtc_tab($event, $step, $msg='')
         }
 
         // db insert for new item
-        // allowed input combinations
+
+        // Allowed input combinations
         if (($new_item && $new_item_destination && $new_item_position)
         || ($new_item && $new_item_class && !$new_item_destination && !$new_item_position)
         || ($new_item && $new_item_sections && !$new_item_destination && !$new_item_position)) {
-            // check if a column is linked with a non-column item
+            // Check if a column is linked with a non-column item
             if (!((bot_wtc_is_region($new_item) xor bot_wtc_is_region($new_item_destination)) &&  $new_item_destination)) {
-                // check items are not the same
+                // Check items are not the same
                 if ($new_item != $new_item_destination) {
-                    // transforms the sections array in a string
+                    // Transforms the sections array in a string
                     $new_item_sections_string = $new_item_sections ? implode('|', $new_item_sections) : '';
                     safe_insert(
                         "bot_wtc",
@@ -638,29 +643,35 @@ function bot_wtc_tab($event, $step, $msg='')
             $msg = array(gTxt('bot_wtc_combo_warning'), E_ERROR);
         }
 
-        if ($delete_id) { // checks if there is something to delete
+        // Checks if there is something to delete
+        if ($delete_id) {
             foreach ($delete_id as $id) {
                 safe_delete('bot_wtc', 'id ="'.$id.'"');
             }
         }
 
         // Update advanced preferences
-        if ($bot_adv_items and ($bot_adv_sections || $bot_adv_class)) { // check if item AND section OR class is selected
 
-            $db_values = bot_wtc_fetch_db(); // first array: all values from db
+        // Check if item AND section OR class is selected
+        if ($bot_adv_items and ($bot_adv_sections || $bot_adv_class)) {
+            // First array: all values from db
+            $db_values = bot_wtc_fetch_db();
 
             if ($bot_adv_sections) {
-                $bot_db_sections = array(); // more specific array: only item => sections
+                // More specific array: only item => sections
+                $bot_db_sections = array();
                 for ($i =0; $i < count($db_values); $i++) {
                     $bot_db_sections[$db_values[$i]['item']] = $db_values[$i]['sections'];
                 }
 
-                foreach ($bot_adv_items as $item) { // iterates posted items
+                // Iterates posted items
+                foreach ($bot_adv_items as $item) {
                     // Fetch any existing sections from db for current item and merges arrays eliminating duplicates
                     if (is_array($bot_db_sections) and array_key_exists($item, $bot_db_sections)) {
                         $db_sect_array = explode('|', $bot_db_sections[$item]);
                         $final_array = array_unique(array_merge($db_sect_array, $bot_adv_sections));
-                        $bot_adv_sections_string = implode('|', $final_array); // new sections string
+                        // New sections string
+                        $bot_adv_sections_string = implode('|', $final_array);
                     } else {
                         $bot_adv_sections_string = implode('|', $bot_adv_sections);
                     }
@@ -675,18 +686,20 @@ function bot_wtc_tab($event, $step, $msg='')
             }
 
             if ($bot_adv_class) {
-                $bot_db_classes = array(); // more specific array: only item => classes
+                // More specific array: only item => classes
+                $bot_db_classes = array();
                 for ($i =0; $i < count($db_values); $i++) {
                     $bot_db_classes[$db_values[$i]['item']] = $db_values[$i]['class'];
                 }
-
-                foreach ($bot_adv_items as $item) { // Iterates posted items
+                // Iterates posted items
+                foreach ($bot_adv_items as $item) {
                     // Fetch any existing class from db for current item and merges arrays eliminating duplicates
                     if (is_array($bot_db_classes) and array_key_exists($item, $bot_db_classes)) {
                         $db_class_array = explode(' ', $bot_db_classes[$item]);
                         $posted_class_array = explode(' ', $bot_adv_class);
                         $final_array = array_unique(array_merge($db_class_array, $posted_class_array));
-                        $bot_adv_classes_string = implode(' ', $final_array); // new sections string
+                        // New sections string
+                        $bot_adv_classes_string = implode(' ', $final_array);
                     } else {
                         $bot_adv_classes_string = $bot_adv_class;
                     }
@@ -729,7 +742,9 @@ function bot_wtc_tab($event, $step, $msg='')
                 hed(gTxt('bot_wtc_tab_name'), 1, array('class' => 'txp-heading')).
             tag_end('div').
             tag_start('div', array('class' => 'txp-layout-2col')).
-                href('<span class="ui-icon ui-icon-gear"></span>'.gTxt('bot_wtc_advanced'), '#', array('id' => 'bot_advanced_open', 'class' => 'txp-list-options')).
+                tag_start('div', array('class' => 'txp-list-options')).
+                    href('<span class="ui-icon ui-icon-gear"></span>'.gTxt('bot_wtc_advanced'), '#', array('id' => 'bot_advanced_open')).
+                tag_end('div').
             tag_end('div').
             tag_start('div', array('class' => 'txp-layout-1col', 'id' => $event.'_container'));
 
@@ -760,7 +775,7 @@ function bot_wtc_tab($event, $step, $msg='')
         );
 
         // Table
-        echo form( // begin form
+        echo form( // Begin form
 
             tag_start('table', array('id' => 'bot_wtc_table', 'class' => 'txp-list--no-options')).
 
@@ -801,7 +816,7 @@ function bot_wtc_tab($event, $step, $msg='')
 
             n.tag_end('div')
 
-        );  // end form
+        );  // End form
     }
 
     // Snippets to insert in the script box
