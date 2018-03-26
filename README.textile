@@ -1,124 +1,138 @@
-h1. bot_write_tab_customize
+h1. Write tab customize
 
-*Note: this version is for the new layout in Textpattern v4.6 and is not compatible with earlier versions of Textpattern.*
+*Note: This version is for Textpattern v4.7 and is not compatible with earlier versions of Textpattern.*
 
-This plugin provides the ability to customize "Textpattern's":http://www.textpattern.com "write" tab. It makes it possible to rearrange UI items, hide parts of the UI on a per-section basis, hide specific sections from the _sections_ dropdown and more. By combining its features you can re-arrange the _write_ tab differently depending on the section you choose in the _sections_ dropdown. Used on its own or together with other plugins (e.g. glz_custom_fields and bot_admin_body_class), it will help you customize the Textpattern admin area to meet your clients needs. 
+This plugin provides the ability to customize Textpattern's "write" panel. It makes it possible to rearrange UI items, hide parts of the UI on a per-section basis, hide specific sections from the _Sections_ dropdown and more.
 
+By combining its features you can re-arrange the _write_ tab differently depending on the section you choose in the _sections_ dropdown. Used on its own or together with other plugins (e.g. glz_custom_fields and bot_admin_body_class), it will help you customize the Textpattern admin area to meet your clients needs.
 
-h2(#installation). Installation
+h3(#features). Features
 
-Paste the .txt or .zip.txt package code into the Admin > Plugins tab, install and enable the plugin. Visit the "Extensions" tab and customize your write tab settings.
-
-
-h2(#features). Features
-
-* Single items (custom fields, body, excerpt etc.) or whole regions can be moved around relative to other single items or regions
-* Items can be hidden on a per-section basis
-* Sections can be hidden from the "write" tab sections dropdown (for static sections like "about us" or "search") 
-* A custom css class can be set for each item. This let's you define classes for items that are not normally targetable with simple css.
-* Javascript code can be set directly through the plugin interface. Particularly useful for use with an external jquery plugin and in conjunction with the ability to add a css class to any item on the page. The script will be executed only in the _write_ tab.
-* Advanced settings for hiding / attributing classes to multiple items – helpful on sites with lots of custom fields. 
-* Compatible with glz_custom_fields, rah_section_titles and rah_write_each_section 
+* Single UI items (custom fields, body, excerpt etc.) or whole regions (main content, sidebar etc.) can be moved around relative to other single items or regions
+* UI Items can be hidden on a per-section basis
+* Sections can be hidden from the "write" panel sections dropdown (for static sections like "about us" or "search")
+* A custom css class can be set for each item. This let's you add classes to items to target with your own javascript.
+* Javascript code can be set directly through the plugin interface. Particularly useful for use with an external jquery plugin and in conjunction with the ability to add a css class to any item on the page. The script will be executed only in the _Write_ panel.
+* Advanced settings for hiding / attributing classes to multiple items – helpful on sites with lots of custom fields.
+* Compatible with glz_custom_fields.
 
 bot_wtc's rearranging capability offers a simple way of customizing Textpattern, but is just one tool for customizing the admin area. More extensive modifications, e.g adapting Textpattern your customer's branding, can be achieved by creating an own admin theme.
 
 
-h2(#example). A simple example
+h2(#installation). Installation
 
-Suppose you want a shorter _Menu-title_ to show beneath the regular _Title_ field.
+Paste the .txt or .zip.txt package code into the Admin > Plugins panel, install and enable the plugin. Visit the "Extensions" tab and customize your write tab settings.
 
-* Define a custom field called Menu-title.
-* In bot_write_tab_customize, set the rule "Menu-title" > After > "Title".
+h3(#upgrading). Upgrade notes
 
-Suppose you have a section where articles won't appear as their own page (for example a section holding FAQ questions and answers), and therefore don't need a Menu-title of their own.
+The plugin should take care of updating existing data to match the v4.7. panel layout on activation. Nevertheless, it is strongly recommended to back up your database prior to updating so that you can restore your settings should something go awry.
 
-* In bot_write_tab_customize, check the box next to "FAQ" in the "hide in" section for "Menu-title". It will no longer appear for FAQ articles.
 
-Another example:
+h2(#examples). Examples
 
-You want to draw attention to some specific fields to ensure they are not overlooked by making them pulsate briefly when then write tab loads.
+h3. Example: Adding a _menu title_ beneath the regular _Title_ field
 
-* In bot_write_tab_customize, assign a class "required" to all the items that need to be filled out.
-* Add the appropriate javascript code in the javascript box as follows (use the buttons to insert blueprint code):
+# Define a custom field called ‘menu_title’ in 'Admin › Preferences » Custom fields' or using the glz_custom_fields plugin. If using glz_custom_fields, you can give it a title text of ‘Menu title’. It will appear in the 'custom fields' group on the write panel.
+# Switch to the 'Write Tab Customize' panel, create a rule ‘Menu title’ > After > ‘Title’. It will now appear beneath the title.
 
-bc. <script src= "../js/jquery.pulsate.js"></script>
+h3. Example: Showing fields on certain sections only
+
+Suppose you have an 'events' section and an 'organisers' section, and custom fields called 'event_location', 'event_time', 'event_duration' and 'organiser_address', 'organiser_tel', 'organiser_email'.
+
+# Switch to the 'Write Tab Customize' panel, create a rule 'event_location', then click on 'Section list' and place a checkbox next to all the section _except_ 'events'. Click the 'Update' button, and repeat for each event custom fields. The fields will now only show when "events" is chosen in the Section dropdown.
+# Now create a rule 'organiser_address', then click on 'Section list' and place a checkmark next to all the section _except_ 'organisers'. Click the 'Update' button, and repeat for each organiser custom fields. The fields will now only show when "organiser" is chosen in the Section dropdown.
+
+Alternative: If you have a lot of custom fields, it can be tiresome to set these settings for each custom field individually. A quicker way to set several custom_fields at once is to choose "Toggle advanced" at the top right. Now put a checkmark next to all the "event_" custom fields and checkmarks next to all the sections _except_ the 'events' section. Click the 'Update' button and they will all be set at once.
+
+h3. Example: Using classes to address fields with javascript / jQuery
+
+Suppose you want to draw attention to some specific fields to ensure they are not overlooked by making them pulsate briefly when the 'Write' panel loads.
+
+# In the 'Write Tab Customize' panel, assign a class @required@ (without a dot) to all the items that need to be filled out.
+# Add the appropriate javascript code in the 'Add javascript' box as follows (use the buttons to insert boilerplate code):
+
+bc. <script src= "/js/jquery.pulsate.js"></script>
 <script>
 $(document).ready(function() {
   $(".required").pulsate({times:3});
 });
 </script>
 
-You can extend this principle to validate fields prior to saving the article.
+For this simple example you'll need to have the file @jquery.pulsate.js@ in the @js@ directory.
+You can extend this principle, for example to highlight required fields that have no content and still need to be filled out, or to validate that field data has been entered correctly.
 
+h3. Tip: Making collapsible groups permanently open
 
-h3. A little tip 
+Suppose you wish to prevent your users from overlooking fields in collapsible groups. You can use 'Write Tab Customize' to hide the label headings for each collapsible group, so that the "twisty" arrow that make it possible to show/hide the group will no longer be accessible. You can also hide the "expand all/collapse all" buttons. Now all you need is the following tiny jQuery rule in the 'Add javascript' box to ensure every collapsible group is automatically opened when the page opens:
 
-Newer versions of Textpattern have brought extensive enhancements to the "write" tab, but there can be some  drawbacks. Almost every item now has an id or a class which means snappier jquery execution and also makes it possible to hide these elements with simple css in a theme.
-
-A problem can occur if, using bot_write_tab_customize, you hide the label headings for each collapsible group. The "twisty" arrow that allows you to show/hide the group will no longer be accessible. Fortunately, you can fix this by inserting a tiny jQuery rule in the js box:
-
-bc. <script type="text/javascript">
+bc. <script>
 $(document).ready(function() {
   $(".toggle").show();
 });
 </script>
 
-This makes all collapsible groups visible, allowing you to hide the heading with css while still ensuring the fields remain visible even if the user has them set to collapse.
-
-
-h2(#upgrading). Upgrade notes 
-
-The plugin should take care of updating the data stored in the db on activation. Nevertheless, it is strongly recommended to back up your database prior to updating so that you can restore your settings should something go awry. 
-
 
 h2(#issues). Notes and known issues
 
-* The order in which the rules for moving items are inserted *does* matter. Rules are executed from top to bottom so if the sequence gets garbled it's advisable to delete them all and start over.
-* Class names must be inserted *without* the dot.
-* If you want to hide an item in *all sections*, it is more efficient to hide items using css – for example @.override-form {display:none;}@ – than it is to hide them using this plugin.
-* This plugin may not function properly if you have the Suhosing module (a security-related module for PHP) installed. In this case follow "these instructions":http://forum.textpattern.com/viewtopic.php?pid=243861#p243861" (thanks maniqui!).
+* *Order does matter*: The rules for moving items are executed from top to bottom so if the sequence gets garbled it's advisable to delete them all and start over.
+* *Class names* must be inserted *without the dot*.
+* If you want to hide an item in *all sections*, it is more efficient to hide items using css than it is to hide them using this plugin. See below.
+* This plugin may not function properly if you have the Suhosing module (a security-related module for PHP) installed. In this case follow "these instructions":http://forum.textpattern.io/viewtopic.php?pid=243861#p243861 (thanks maniqui!).
+
+h3. Other ways of customising the admin UI
+
+Successive versions of Textpattern have brought extensive enhancements to the "write" panel and almost every item now has an id or a class which means snappier jquery execution but more importantly also makes it possible to hide these elements with simple css in a theme. Hiding items using CSS is more efficient than using javascript / jQuery but cannot respond conditionally to section changes.
+
+If you have elements you will consistently hide or restyle or javascript you consistently use – i.e. that is not dependent on the chosen section – you can add an optional user-defined custom CSS and JavaScript file to your textpattern installation directory. By default, these are located at:
+
+bc. assets/css/custom.css
+assets/js/custom.js
+
+You may use different file names by adding the following line(s) within your Textpattern 'config.php' file (before the closing @?>@ line):
+
+bc. define('admin_custom_css', 'your_custom_rules.css');
+define('admin_custom_js', 'your_custom_javascript.js');
+
+For examples, see the "Readme":https://github.com/textpattern/textpattern/tree/master/textpattern/admin-themes/hive and "custom-example.css":https://github.com/textpattern/textpattern/tree/master/textpattern/admin-themes/hive/assets/css in the admin-themes.
 
 
-h2(#compile). Compiling the plugin from the source files
+h2(#changelog). Changelog
 
-The @.txt@ and @.zip.txt@ can be used immediately. For those interested in forking and extending the plugin, this plugin follows gocom's "plugin structure":https://github.com/gocom/abc_plugin and can be compiled using "rah_plugcompiler":https://github.com/gocom/MassPlugCompiler as follows:
+h3. 8.0 – 2018-03-26 (jools-r)
 
-* clone/download "rah_plugcompiler":https://github.com/gocom/MassPlugCompiler to your local computer.
-* In the terminal:
-
-bc.. cd /path/to/rah_plugincompiler
-php compile /path/to/bot_wtc /path/to/bot_wtc/packages
-
-p. This should generate @txt@ and @.zip.txt@ installable plugins in the @/packages@ subdirectory.
-
-
-
-h1(#changelog). Changelog
-
-h2. 7.5 – 2016-05-22
-
-* Further write tab area classes and id updates for Textpattern v4.6. (jcr)
-* Updated install routine to use Textpattern’s built-in functions (jcr) for better PHP 7 compatibility
-* Switch to textpacks and the built-in gTxt function (jcr)
-* Updated help
-
-h2. 7.4 – 2015-12-07
-
-* *Note: for Textpattern version 4.6 only. No longer compatible with earlier versions of Textpattern*
-* Updated write tab area classes and id for Textpattern v4.6 (by jcr).
+* *Note: for Textpattern version 4.7 only.* No longer compatible with earlier versions of Textpattern.
+* Write tab area classes and id updates to match Textpattern v4.7's 'Write' panel layout.
+* Revised custom field handling to reflect new UI pattern, including migration of previous settings on installation.
+* Revised 'Write Tab Customize' panel using txp's in-built UI functions.
+* Compatibility with glz_custom_fields v2 (e.g. custom field titles).
+* Translatable UI text (see Textpack).
+* Error notices now use Txp's own in-built messaging functions.
+* Revised help.
 
 
-h2. 7.3 – 2014-06-14
+h3. 7.5 – 2016-05-22
 
-* Updated to address "Sorry, the form could not be submitted" error in 4.6 (by mrdale)
-* Update bot_wtc extension panel to use new "hive" admin controls
+* Further write tab area classes and id updates for Textpattern v4.6. (jools-r)
+* Updated install routine to use Textpattern’s built-in functions (jools-r) for better PHP 7 compatibility.
 
 
-h2. 7.1
+h3. 7.4 – 2015-12-07
 
-* fixed "issue with multi-select and checkboxes":http://forum.textpattern.com/viewtopic.php?pid=245511#p245511 custom fields
-* fixed deprecated jquery
-* changed 'sections' field "from varchar to text":http://forum.textpattern.com/viewtopic.php?pid=254132#p254132
-* removed deprecated language attribute from 'script' tag
-* updated help
-* cleaned up code
+* *Note: for Textpattern version 4.6 only.* No longer compatible with earlier versions of Textpattern.
+* Updated write tab area classes and id for Textpattern v4.6 (jools-r).
+
+
+h3. 7.3 – 2014-06-14
+
+* Updated to address "Sorry, the form could not be submitted" error in 4.6 (by mrdale).
+* Update bot_wtc extension panel to use new "hive" admin controls.
+
+
+h3. 7.1
+
+* Fixed "issue with multi-select and checkboxes":http://forum.textpattern.io/viewtopic.php?pid=245511#p245511 custom fields.
+* Fixed deprecated jquery.
+* Changed 'sections' field "from varchar to text":http://forum.textpattern.io/viewtopic.php?pid=254132#p254132.
+* Removed deprecated language attribute from 'script' tag.
+* Updated help.
+* Cleaned up code.

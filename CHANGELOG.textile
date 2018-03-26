@@ -1,29 +1,40 @@
-h1(#changelog). Changelog
+h2(#changelog). Changelog
 
-h2. 7.5 – 2016-05-22
+h3. 8.0 – 2018-03-26 (jools-r)
 
-* Further write tab area classes and id updates for Textpattern v4.6. (jcr)
-* Updated install routine to use Textpattern’s built-in functions (jcr) for better PHP 7 compatibility
-* Switch to textpacks and the built-in gTxt function (jcr)
-* Updated help
-
-h2. 7.4 – 2015-12-07
-
-* *Note: for Textpattern version 4.6 only. No longer compatible with earlier versions of Textpattern*
-* Updated write tab area classes and id for Textpattern v4.6 (by jcr).
-
-
-h2. 7.3 – 2014-06-14
-
-* Updated to address "Sorry, the form could not be submitted" error in 4.6 (by mrdale)
-* Update bot_wtc extension panel to use new "hive" admin controls
+* *Note: for Textpattern version 4.7 only.* No longer compatible with earlier versions of Textpattern.
+* Write tab area classes and id updates to match Textpattern v4.7's 'Write' panel layout.
+* Revised custom field handling to reflect new UI pattern, including migration of previous settings on installation.
+* Revised 'Write Tab Customize' panel using txp's in-built UI functions.
+* Compatibility with glz_custom_fields v2 (e.g. custom field titles).
+* Translatable UI text (see Textpack).
+* Error notices now use Txp's own in-built messaging functions.
+* Revised help.
 
 
-h2. 7.1
+h3. 7.5 – 2016-05-22
 
-* fixed "issue with multi-select and checkboxes":http://forum.textpattern.com/viewtopic.php?pid=245511#p245511 custom fields
-* fixed deprecated jquery
-* changed 'sections' field "from varchar to text":http://forum.textpattern.com/viewtopic.php?pid=254132#p254132
-* removed deprecated language attribute from 'script' tag
-* updated help
-* cleaned up code
+* Further write tab area classes and id updates for Textpattern v4.6. (jools-r)
+* Updated install routine to use Textpattern’s built-in functions (jools-r) for better PHP 7 compatibility.
+
+
+h3. 7.4 – 2015-12-07
+
+* *Note: for Textpattern version 4.6 only.* No longer compatible with earlier versions of Textpattern.
+* Updated write tab area classes and id for Textpattern v4.6 (jools-r).
+
+
+h3. 7.3 – 2014-06-14
+
+* Updated to address "Sorry, the form could not be submitted" error in 4.6 (by mrdale).
+* Update bot_wtc extension panel to use new "hive" admin controls.
+
+
+h3. 7.1
+
+* Fixed "issue with multi-select and checkboxes":http://forum.textpattern.io/viewtopic.php?pid=245511#p245511 custom fields.
+* Fixed deprecated jquery.
+* Changed 'sections' field "from varchar to text":http://forum.textpattern.io/viewtopic.php?pid=254132#p254132.
+* Removed deprecated language attribute from 'script' tag.
+* Updated help.
+* Cleaned up code.

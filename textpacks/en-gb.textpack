@@ -1,10 +1,29 @@
 #@admin
-#@language en-gb
-region_warning => Entire column or sidebar regions cannot be moved relative to single items and vice-versa
-same_item_warning => Oops! You are trying to move an item relative to itself
-combo_warning => Oops! You tried to insert an incomplete rule
-no_items_warning => Warning: at least an item must be selected
+#@language en, en-gb, en-us
 article_image_group => Article image group
 writetab_main_content => Main content
 writetab_sidebar => Sidebar
 writetab_view_modes => View mode switcher
+bot_wtc_tab_name => Write Tab Customize
+bot_wtc_advanced => Toggle advanced
+bot_wtc_item => Item
+bot_wtc_position => Position
+bot_wtc_destination => Destination
+bot_wtc_hide => Hide in
+bot_wtc_class => Class
+bot_wtc_before => Before
+bot_wtc_after => After
+bot_wtc_section_list => Section list
+bot_wtc_update_button => Update
+bot_wtc_advanced_multiple_group => Advanced / Multiple selection
+bot_wtc_items => Items
+bot_wtc_hide_in_section => Hide in section
+bot_wtc_set_css_class => Set CSS class
+bot_wtc_static_sections_group => Hide sections in sections dropdown
+bot_wtc_add_javascript_group => Add javascript to write panel
+bot_wtc_add_external_script => Add external script
+bot_wtc_add_inline_code => Add inline jQuery code
+bot_wtc_region_warning => Entire column or sidebar regions cannot be moved relative to single items and vice-versa
+bot_wtc_same_item_warning => Oops! You are trying to move an item relative to itself
+bot_wtc_combo_warning => Oops! You tried to insert an incomplete rule
+bot_wtc_no_items_warning => Warning: at least an item must be selected
