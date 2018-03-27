@@ -1130,8 +1130,18 @@ function bot_wtc()
         echo
         '<script>'.n.
         '    $(document).ready(function() {'.n.
-                bot_wtc_jquery_rows().n.
-        '    });'.n.
+        '       textpattern.Relay.register("txpAsyncForm.success", botWtcCleanUp);'.n.
+                    bot_wtc_jquery_rows().n.
+        '       function botWtcCleanUp() {
+                    $("#txp-custom-field-group-content").find(".custom-field").each(function(){
+                        var pattern = /\bcustom-[0-9]+\b/;
+                        var matchResult = $(this).attr("class").match(pattern);
+                        if (matchResult && $("."+matchResult[0]).length > 1) {
+                               $(this).remove();
+                        }
+                    })
+                }
+             });'.n.
         '</script>';
     }
     if ($bot_wtc_script) {
