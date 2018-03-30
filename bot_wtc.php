@@ -22,9 +22,12 @@ if (@txpinterface == 'admin') {
 
 }
 
+// UPDATE these two arrays to match Textpattern UI layout / gtxt string names
+
 // ===========================================
 // Array of Write Panel UI items
 // Key: gTxt name => Value: Jquery selector query
+// ===========================================
 
 $bot_arr_selectors = array(
 
@@ -95,15 +98,89 @@ $bot_arr_selectors = array(
 
 );
 
+// ===========================================
+// Array of Write Panel UI item -> container/group allocation
+// Says where UI items originally reside for bot_wtc_jquery_cleanrefresh_rows()
+//
+// Format: '#container-id/class' => array (
+//              '.item-id/class',
+//              '.item-id/class',
+//          )
+//
+// Note: Not all panels and not all subcontainers are refreshed
+// They are included below but (intentionally) commented out.
+// ===========================================
+
+global $bot_arr_item_groups;
+$bot_arr_item_groups = array (
+
+/*
+    '.txp-save-zone' => array(
+        '.txp-save',
+        '#txp-article-actions'
+    ),
+*/
+    '#txp-article-actions' => array (
+        '.txp-new',
+        '.txp-clone',
+        '.txp-article-view'
+    ),
+/*
+    '#txp-write-sort-group' => array (
+        '#txp-container-status',
+        '.section',
+        '.override-form'
+    ),
+*/
+/*
+    '#txp-dates-group' => array (
+        '#publish-datetime-group',
+        '#expires-datetime-group',
+    ),
+*/
+    '#publish-datetime-group' => array (
+        '.posted.date',
+        '.posted.time',
+        '.reset-time'
+    ),
+    '#expires-datetime-group' => array (
+        '.expires.date',
+        '.expires.time',
+        '.expire-now'
+    ),
+/*
+    '#txp-categories-group' => array (
+        '.category-1',
+        '.category-2'
+    ),
+*/
+/*
+    '#txp-meta-group' => array (
+        '.url-title',
+        '.description',
+        '.keywords'
+    ),
+*/
+    '#txp-comments-group' => array (
+        '.comments-annotate',
+        '.comment-invite'
+    ),
+    '#txp-image-group' => array (
+        '.article-image'
+    )
+
+);
+
+
     // Get language strings not in plugin for write tab item dropdowns
     $ui_language = get_pref('language_ui', TEXTPATTERN_DEFAULT_LANG);
     $langObject = \Txp::get('\Textpattern\L10n\Lang'); // Fetch ref to language class if not already done
     // Extract strings from the given groups in the current UI language.
     $strings = $langObject->extract($ui_language, 'article, tag, prefs, public');
-/*
+
     // Get just the relevant subset of strings that corresponds to dropdown content
     $strings = array_intersect_key($strings, array_flip(array_keys($bot_arr_selectors)));
-*/
+
     // Set the internal strings to use them (true = append to what's already loaded)
     $langObject->setPack($strings, true);
 
@@ -1093,9 +1170,20 @@ function bot_hidden_sections()
     }
 }
 
+// ===========================================================
+// Helper function: retrieves parent key of an array item
 
+function search_key($needle, $haystack)
+{
+    foreach($haystack as $key => $val) {
+         if(in_array($needle, $val)) {
+            return $key;
+         }
+   }
+}
 
 // ===========================================================
+// js rows: reposition items and add classes to items
 
 function bot_wtc_jquery_rows()
 {
@@ -1116,8 +1204,36 @@ function bot_wtc_jquery_rows()
 };
 
 
+// ===========================================================
+// js rows: Clean up all elements outside their original containers (e.g. after async save)
+// requires $bot_arr_item_groups array
+
+function bot_wtc_jquery_cleanrefresh_rows()
+{
+    global $bot_items, $bot_arr_item_groups;
+    // Array of values from the db
+    $db_values = bot_wtc_fetch_db();
+
+    $rows = '';
+    for ($i = 0; $i <count($db_values); $i++) {
+
+        $item = ($db_values[$i]['item'] != '') ? $db_values[$i]['item'] : '';
+        $item_selector = substr($item, 3, -2); // Remove '$("' and '")'
+        // Find item's home container
+        $item_home = search_key($item_selector, $bot_arr_item_groups);
+
+        if (!empty($item_home)) {
+            $row = $item.'.not("'.$item_home.' '.$item_selector.'").remove();'.n;
+            $rows .= $row;
+        }
+    }
+    return $rows;
+};
+
+
 
 // ===========================================================
+// Output customize and async refresh javascript
 
 function bot_wtc()
 {
@@ -1133,18 +1249,38 @@ function bot_wtc()
         echo
         '<script>'.n.
         '    $(document).ready(function() {'.n.
-        '       textpattern.Relay.register("txpAsyncForm.success", botWtcCleanUp);'.n.
+        // Call cleanUp function on successful async save
+        '       textpattern.Relay.register("txpAsyncForm.success", botWtcDoRefresh);'.n.
+
+        // CUSTOMIZE function
+        '       function botWtcDoCustomize() {'.n.
+                    // Position, class and hide rules
                     bot_wtc_jquery_rows().n.
-        '       function botWtcCleanUp() {
-                    $("#txp-custom-field-group-content").find(".custom-field").each(function(){
+        '       }'.n.
+                // Run once after page load
+        '       botWtcDoCustomize();'.n.
+
+        // CLEANUP function (called after async save)
+        '       function botWtcDoRefresh() {'.n.
+                    // Clean up all elements outside their original containers
+                    bot_wtc_jquery_cleanrefresh_rows().n.
+                    // Clean up all duplicate custom fields outside the custom fields group
+        '           $("#txp-custom-field-group-content").find(".custom-field").each(function(){
                         var pattern = /\bcustom-[0-9]+\b/;
                         var matchResult = $(this).attr("class").match(pattern);
                         if (matchResult && $("."+matchResult[0]).length > 1) {
-                               $(this).remove();
+                            $this= $(this);
+                            $("."+matchResult[0]).not($this).remove();
                         }
-                    })
-                }
-             });'.n.
+                    })'.n.
+                    // (Re-)perform write tab customize
+        '           botWtcDoCustomize();'.n.
+                    // Get selected section and use it to effect section change
+                    // to trigger hide by section rules
+        '           var value = $("select#section").val();'.n.
+        '           $("select#section").val(value).change();'.n.
+        '       }'.n.
+        '    });'.n.
         '</script>';
     }
     if ($bot_wtc_script) {
