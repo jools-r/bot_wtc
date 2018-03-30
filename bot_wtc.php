@@ -724,7 +724,7 @@ function bot_wtc_tab($event, $step, $msg='')
 
         // Updates script prefs
         if ($bot_wtc_script) {
-            safe_update('txp_prefs', 'val= \''.doslash($bot_wtc_script).'\', html=\'textarea\' ', 'name = \'bot_wtc_script\'');
+            safe_update('txp_prefs', 'val= \''.trim(doslash($bot_wtc_script)).'\', html=\'textarea\' ', 'name = \'bot_wtc_script\'');
         }
 
         // No error message? Then announce success
