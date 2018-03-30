@@ -43,9 +43,9 @@ $bot_arr_selectors = array(
 
         'save'                => '$(".txp-save")',
 
-        'actions'             => '$("#txp-article-actions")',
+        'writetab_article_actions' => '$("#txp-article-actions")',
 
-            'create_new'      => '$(".txp-new")',
+            'add_new_article' => '$(".txp-new")',
             'duplicate'       => '$(".txp-clone")',
             'view'            => '$(".txp-article-view")',
 
@@ -53,7 +53,7 @@ $bot_arr_selectors = array(
 
         'sort_display'        => '$("#txp-write-sort-group")',
 
-            'status'          => '$(".status")',
+            'status'          => '$("#txp-container-status")',
             'section'         => '$(".section")',
             'override_default_form' => '$(".override-form")',
 
@@ -67,7 +67,7 @@ $bot_arr_selectors = array(
             'expired'         => '$("#expires-datetime-group")',
             'expire_date'     => '$(".expires.date")',
             'expire_time'     => '$(".expires.time")',
-            'expire_now'      => '$(".expire-now")',
+            'set_expire_now'  => '$(".expire-now")',
 
         'categories'          =>  '$("#txp-categories-group")',
 

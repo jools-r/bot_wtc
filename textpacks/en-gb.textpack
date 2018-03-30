@@ -4,6 +4,7 @@ article_image_group => Article image group
 writetab_main_content => Main content
 writetab_sidebar => Sidebar
 writetab_view_modes => View mode switcher
+writetab_article_actions => Article actions
 bot_wtc_tab_name => Write Tab Customize
 bot_wtc_advanced => Toggle advanced
 bot_wtc_item => Item
