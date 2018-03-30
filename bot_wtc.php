@@ -482,8 +482,8 @@ function bot_wtc_static_sections_select()
         // If section is in db mark as checked
         $checked = in_array($key, $static_sections) ? '1': '0';
         $static_sections_row = '<div class="txp-form-checkbox">'.
-            n.checkbox('static_sections[]', $key, $checked, 0, $key).
-            n.tag($value, 'label', array('for' => $key)).
+            n.checkbox('static_sections[]', $key, $checked, 0, 'section_'.$key).
+            n.tag($value, 'label', array('for' => 'section_'.$key)).
             n.'</div>';
         $static_sections_rows .= $static_sections_row;
     }
@@ -716,9 +716,12 @@ function bot_wtc_tab($event, $step, $msg='')
             $msg = array(gTxt('bot_wtc_no_items_warning'), E_ERROR);
         }
 
-        // Updates static sections prefs
-        if ($static_sections) {
-            $static_sections_string = implode('|', $static_sections);
+        // Updates static sections prefs (including when all deselected)
+        $db_static_sections = safe_field('val', 'txp_prefs', 'name = "bot_wtc_static_sections"');
+        if ($static_sections || (empty($static_sections) && !empty($db_static_sections)) ) {
+            if ($static_sections) {
+                $static_sections_string = implode('|', $static_sections);
+            }
             safe_update('txp_prefs', 'val= "'.doslash($static_sections_string).'", html="text_input" ', 'name = "bot_wtc_static_sections"');
         }
 
