@@ -997,7 +997,6 @@ function bot_wtc_css()
     #bot_advanced {}
 
     #bot_advanced .txp-grid-cell {
-        width: calc((100% - 12px)/3);
         border: none;
         margin-bottom: 20px;
     }
