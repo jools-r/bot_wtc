@@ -1022,13 +1022,6 @@ function bot_wtc_css()
         clear: both;
     }
 
-    #bot_uninstall {}
-
-    #bot_install {
-        margin: auto;
-        width: 800px;
-    }
-
     a.bot_push {
         padding-right: 13px;
         line-height: 1.85;
