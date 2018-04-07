@@ -485,8 +485,8 @@ function bot_wtc_output_rows()
     $new_item_sections_rows = '';
     foreach ($sections as $key => $value) {
         $new_item_sections_row = '<div class="txp-form-checkbox">'.
-            n.checkbox('new_item_sections[]', $key, '0', 0, $key).
-            n.tag($value, 'label', array('for' => $key)).
+            n.checkbox('new_item_sections[]', $key, '0', 0, $key.'_0').
+            n.tag($value, 'label', array('for' => $key.'_0')).
             n.'</div>';
         $new_item_sections_rows .= $new_item_sections_row;
     }
@@ -514,8 +514,8 @@ function bot_wtc_output_rows()
             foreach ($sections as $key => $value) {
                 $checked = in_array($key, $bot_hide_in_this_sections_array) ? '1': '0';
                 $item_sections_row = '<div class="txp-form-checkbox">'.
-                    n.checkbox('bot_wtc_sections_for_id_'.$db_values[$i]['id'].'[]', $key, $checked, 0, $key).
-                    n.tag($value, 'label', array('for' => $key)).
+                    n.checkbox('bot_wtc_sections_for_id_'.$db_values[$i]['id'].'[]', $key, $checked, 0, $key.'_'.$db_values[$i]['id']).
+                    n.tag($value, 'label', array('for' => $key.'_'.$db_values[$i]['id'])).
                     n.'</div>';
                 $item_sections_rows .= $item_sections_row;
             }
