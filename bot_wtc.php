@@ -928,11 +928,11 @@ function bot_wtc_tab($event, $step, $msg='')
             '  return false;'.n.
              '});'.n.
             '$("a.bot_all").click(function(){'.n.
-            '  $(this).parent().parent().find("input").attr("checked", true);'.n.
+            '  $(this).parent().parent().find("input").prop("checked", true);'.n.
             '  return false;'.n.
             '});'.n.
             '$("a.bot_none").click(function(){'.n.
-            '  $(this).parent().parent().find("input").attr("checked", false);'.n.
+            '  $(this).parent().parent().find("input").prop("checked", false);'.n.
             '  return false;'.n.
             '});'.n.
             '$("#bot_jq_link").click(function(){'.n.
