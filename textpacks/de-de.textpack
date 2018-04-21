@@ -1,0 +1,30 @@
+#@admin
+#@language de, de-de
+article_image_group => Artikelbild-Gruppe
+writetab_main_content => Hauptspalte
+writetab_sidebar => Seitenspalte
+writetab_view_modes => Modus-Umschaltung anzeigen
+writetab_article_actions => Artikelaktionen
+bot_wtc_tab_name => Write Tab Customize
+bot_wtc_advanced => Erweiterte Auswahl ein/aus
+bot_wtc_item => Element
+bot_wtc_position => Anordnung
+bot_wtc_destination => Zielelement
+bot_wtc_hide => Verbergen in
+bot_wtc_class => CSS-Klasse
+bot_wtc_before => vor
+bot_wtc_after => nach
+bot_wtc_section_list => Sektionen
+bot_wtc_update_button => Aktualisieren
+bot_wtc_advanced_multiple_group => Erweiterte Auswahl / Mehrfachauswahlen
+bot_wtc_items => Elemente
+bot_wtc_hide_in_section => In diesen Sektionen verbergen
+bot_wtc_set_css_class => CSS-Klasse festlegen
+bot_wtc_static_sections_group => Ausgewählte Sektionen nicht im Sektionsmenü anzeigen
+bot_wtc_add_javascript_group => Benutzerdefiniertes JavaScript hinzufügen
+bot_wtc_add_external_script => Externes Script einbinden
+bot_wtc_add_inline_code => jQuery-Code hinzufügen
+bot_wtc_region_warning => Hinweis: Ganze Seitenregionen (Haupt-/Nebenspalte) können nicht relativ zu einzelnen Elementen positioniert werden (und umgekehrt)
+bot_wtc_same_item_warning => Hinweis: Ein Element kann nicht relativ zu sich selbst positioniert werden.
+bot_wtc_combo_warning => Hinweis: Die eingefügte Regel war nicht vollständig.
+bot_wtc_no_items_warning => Hinweis: Es muss wenigstens ein Element ausgewählt sein.

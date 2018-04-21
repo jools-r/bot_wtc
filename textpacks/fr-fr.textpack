@@ -1,0 +1,30 @@
+#@admin
+#@language fr, fr-fr
+article_image_group => Groupe d´images d´article
+writetab_main_content => Contenu principal
+writetab_sidebar => Colonne latérale
+writetab_view_modes => Commutateur du mode d´affichage
+writetab_article_actions => Actions sur les articles
+bot_wtc_tab_name => Personnalisation de la page «Rédiger»
+bot_wtc_advanced => Basculer les options avancées
+bot_wtc_item => Élément
+bot_wtc_position => Position
+bot_wtc_destination => Destination
+bot_wtc_hide => Masqué dans
+bot_wtc_class => Classe
+bot_wtc_before => Avant
+bot_wtc_after => Après
+bot_wtc_section_list => Liste des sections
+bot_wtc_update_button => Actualiser
+bot_wtc_advanced_multiple_group => Paramètres Avancés / Sélection Multiple
+bot_wtc_items => Éléments
+bot_wtc_hide_in_section => Masquer dans la section
+bot_wtc_set_css_class => Déclarer une classe CSS
+bot_wtc_static_sections_group => Masquer les sections dans la liste déroulante «Section»
+bot_wtc_add_javascript_group => Ajouter du javascript à la page «Rédiger»
+bot_wtc_add_external_script => Ajouter un script externe
+bot_wtc_add_inline_code => Ajouter du code jQuery incorporé
+bot_wtc_region_warning => La colonne entière ou des zones de la colonne latérale ne peuvent être déplacées relativement à un élément individuel et vice-versa.
+bot_wtc_same_item_warning => Oups. Vous cherchez à déplacer un élément par rapport à lui-même !
+bot_wtc_combo_warning => Oups. Vous cherchez à inclure une règle incomplète !
+bot_wtc_no_items_warning => Attention : au moins un élément doit être sélectionné !
