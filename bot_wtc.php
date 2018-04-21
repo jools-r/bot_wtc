@@ -277,12 +277,12 @@ function bot_get_sections()
 // ===========================================================
 // Update button
 
-function bot_update_button()
+function bot_update_button($btn_class='publish')
 {
     return n.'<div class="bot_update_button">'
         .n.eInput('bot_wtc_tab')
         .n.sInput('update')
-        .n.fInput('submit', 'update', gTxt('bot_wtc_update_button'), 'publish')
+        .n.fInput('submit', 'update', gTxt('bot_wtc_update_button'), $btn_class)
         .'</div>';
 }
 
@@ -598,7 +598,7 @@ function bot_advanced()
 
     return n.wrapRegion('bot_advanced',
             form(
-                bot_update_button().
+                bot_update_button('publish-advanced').
                 n.'<div class="txp-grid">'.
                 n.'<div id="bot_adv_items" class="txp-grid-cell"><h4>'.gTxt('bot_wtc_items').'</h4>'.$item_rows.'</div>'.
                   '<div id="bot_adv_hide"  class="txp-grid-cell"><h4>'.gTxt('bot_wtc_hide_in_section').'</h4>'.$sections_rows.'<p><a href="#" class="bot_all">'.gTxt("all").'</a> | <a href="#" class="bot_none">'.gTxt("none").'</a></p></div>'.
@@ -1020,6 +1020,15 @@ function bot_wtc_css()
     .bot_update_button {
         margin: 20px 0;
         clear: both;
+    }
+
+    [type="submit"].publish-advanced, a.publish-advanced, button.publish-advanced {
+        background-color: #ffd21b;
+        background-image: linear-gradient(#ffe168,#ffd21b);
+        border: 1px solid #f7c600;
+        font-weight: 700;
+        height: 2.76923076923077em;
+        padding: .61538461538462em 1em;
     }
 
     a.bot_push {
