@@ -293,7 +293,7 @@ function bot_update_button($btn_class='publish')
 
 function bot_wtc_is_region($item)
 {
-    $item = get_magic_quotes_gpc() ? $item : doSlash($item) ;
+    $item = doSlash($item);
 
     if ($item == '$(\"#main_content\")'
      || $item == '$(\"#supporting_content\")'
