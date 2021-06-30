@@ -1,0 +1,32 @@
+#@admin
+#@language cs-cz
+add_new_article => Nový článek
+article_image_group => Obrázek
+article_markup => Formát
+writetab_main_content => Hlavní obsah
+writetab_sidebar => Postranní sloupec
+writetab_view_modes => Přepínač Text|HTML|Náhled
+writetab_article_actions => Akce článku
+bot_wtc_tab_name =>Přizpůsobení panelu Psaní
+bot_wtc_advanced => Přepínač možností zadávání
+bot_wtc_item => Položka
+bot_wtc_position => Posice
+bot_wtc_destination => Umístění
+bot_wtc_hide => Skrýt pro
+bot_wtc_class => Třída
+bot_wtc_before => před
+bot_wtc_after => po
+bot_wtc_section_list => Rubriky
+bot_wtc_update_button => Aktualizovat
+bot_wtc_advanced_multiple_group => Rozšířené / Hromadné zadávání
+bot_wtc_items => Položky
+bot_wtc_hide_in_section => Skrýt pro rubriku
+bot_wtc_set_css_class => Zadat třídu CSS
+bot_wtc_static_sections_group => Skrýt rubriky v roletce Rubrika
+bot_wtc_add_javascript_group => Vložit javascript do stránky Psaní
+bot_wtc_add_external_script => Vložit externí script
+bot_wtc_add_inline_code => Vložit inline jQuery code
+bot_wtc_region_warning => Nelze přesouvat celý sloupec, nebo postranní sloupec vůči jednotlivým položkám a naopak
+bot_wtc_same_item_warning => Ouha! Pokoušíš se přesunout položku relativně k ní samé
+bot_wtc_combo_warning => Ouha! Zkoušíš uložit nekompletní pravidlo
+bot_wtc_no_items_warning => Varování: musí být vybrána nejméně jedna položka
