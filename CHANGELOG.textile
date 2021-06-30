@@ -1,5 +1,11 @@
 h2(#changelog). Changelog
 
+h3. 8.0.1 – 2021-06-30 (jools-r)
+
+* Silence deprecated magic_quotes error.
+* Added Czech language (thanks milosberka).
+* Updated textpack language codes.
+
 h3. 8.0 – 2018-03-26 (jools-r)
 
 * *Note: for Textpattern version 4.7 only.* No longer compatible with earlier versions of Textpattern.
