@@ -1,5 +1,5 @@
 #@admin
-#@language en, en-gb, en-us
+#@language en
 article_image_group => Article image group
 writetab_main_content => Main content
 writetab_sidebar => Sidebar

@@ -1,5 +1,5 @@
 #@admin
-#@language cs-cz
+#@language cs
 add_new_article => Nový článek
 article_image_group => Obrázek
 article_markup => Formát
