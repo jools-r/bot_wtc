@@ -903,38 +903,38 @@ function bot_wtc_tab($event, $step, $msg='')
     '    $(document).ready(function() {'.n.
             '$("div.bot_collapse").hide()'.n.
             '$("section#bot_advanced").hide()'.n.
-            '$("a.bot_push").click(function(){'.n.
+            '$("a.bot_push").on("click", function(){'.n.
             '  $(this).toggleClass("bot_arrow").parent().next().slideToggle("fast");'.n.
             '  $(this).children(".ui-icon").toggleClass("ui-icon-caret-1-s").toggleClass("ui-icon-caret-1-n");'.n.
             '  return false;'.n.
             '});'.n.
-            '$("#bot_collapse_all").click(function(){'.n.
+            '$("#bot_collapse_all").on("click", function(){'.n.
             '  $("div.bot_collapse").slideUp("fast").parent().find(".ui-icon").removeClass("ui-icon-caret-1-n").addClass("ui-icon-caret-1-s");'.n.
             '  return false;'.n.
              '});'.n.
-            '$("#bot_expand_all").click(function(){'.n.
+            '$("#bot_expand_all").on("click", function(){'.n.
             '  $("div.bot_collapse").slideDown("fast").parent().find(".ui-icon").removeClass("ui-icon-caret-1-s").addClass("ui-icon-caret-1-n");'.n.
             '  return false;'.n.
              '});'.n.
-            '$("#bot_advanced_open").click(function(){'.n.
+            '$("#bot_advanced_open").on("click", function(){'.n.
             '  $("section#bot_advanced").slideToggle("fast");'.n.
             '  $("div#bot_main").toggle("fast");'.n.
             '  return false;'.n.
              '});'.n.
-            '$("a.bot_all").click(function(){'.n.
+            '$("a.bot_all").on("click", function(){'.n.
             '  $(this).parent().parent().find("input").prop("checked", true);'.n.
             '  return false;'.n.
             '});'.n.
-            '$("a.bot_none").click(function(){'.n.
+            '$("a.bot_none").on("click", function(){'.n.
             '  $(this).parent().parent().find("input").prop("checked", false);'.n.
             '  return false;'.n.
             '});'.n.
-            '$("#bot_jq_link").click(function(){'.n.
+            '$("#bot_jq_link").on("click", function(){'.n.
             '  var areaValue = $("#bot_wtc_script").val();'.n.
             '  $("#bot_wtc_script").val(areaValue + "'.$bot_jquery_snippet.'");'.n.
             '  return(false);'.n.
             '});'.n.
-            '$("#bot_js_link").click(function(){'.n.
+            '$("#bot_js_link").on("click", function(){'.n.
             '  var areaValue = $("#bot_wtc_script").val();'.n.
             '  $("#bot_wtc_script").val(areaValue + "'.$bot_js_snippet.'");'.n.
             '  return(false);'.n.
@@ -1123,13 +1123,13 @@ function bot_hide_per_section()
                 '<script>'.n.
                 '    $(document).ready(function() {'.n;
         echo
-                '        $("select#section").change(function(){'.n;
+                '        $("select#section").on("change", function(){'.n;
         bot_wtc_jquery_restore_rows();
         echo
                 '            var value = $("select#section").val();';
         bot_wtc_jquery_hide_sections_rows();
         echo
-                '        }).change();'.n.
+                '        }).trigger("change");'.n.
                 '    });'.n.
                 '</script>';
     }
