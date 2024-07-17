@@ -1,5 +1,13 @@
 h2(#changelog). Changelog
 
+h3. 8.1 – 2024-07-15 (jools-r)
+
+* Textpattern v4.9 support
+* Fix for mysqli query error when adding new settings via the advanced settings pane (missing column defaults)
+* Plugin install and update routine to add column defaults if not already present.
+* Update deprecated jquery – hopefully fixes flaky field updates on save
+* Support for CSP-aware (nonced) inline <style> and <script> blocks. Textpattern v4.9+ (when activated in config.php)
+
 h3. 8.0.1 – 2021-06-30 (jools-r)
 
 * Silence deprecated magic_quotes error.
