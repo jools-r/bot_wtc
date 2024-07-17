@@ -400,15 +400,20 @@ function bot_wtc_update()
 
 
 // ===========================================================
-// Check if the bot_wtc table exists
+// Check if the bot_wtc table exists [deprecated]
+// TODO: use just safe_exists('table_name') from Txp 4.9+
 
 function bot_wtc_check_install()
 {
+    if (function_exists('safe_exists')) {
+        $table_exists = safe_exists('bot_wtc');
+    } else {
     // If number of rows is false, table does not exist
-    if (safe_count("bot_wtc", "1 = 1") !== false) {
-        return true;
+        if (safe_count('bot_wtc', "1 = 1") !== false) {
+            $table_exists = true;
+        }
     }
-    return false;
+    return $table_exists;
 }
 
 
