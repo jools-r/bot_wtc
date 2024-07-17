@@ -421,7 +421,7 @@ function bot_wtc_check_install()
     if (function_exists('safe_exists')) {
         $table_exists = safe_exists('bot_wtc');
     } else {
-    // If number of rows is false, table does not exist
+        // If number of rows is false, table does not exist
         if (safe_count('bot_wtc', "1 = 1") !== false) {
             $table_exists = true;
         }
@@ -1186,7 +1186,7 @@ function bot_hidden_sections()
 
         $js_hidden_sections =
             '$(document).ready(function() {'.n;
-        foreach ($sections as $value) {
+            foreach ($sections as $value) {
                 $js_hidden_sections .= '       $("select#section option:not(:selected)[value=\''.$value.'\']").remove();'.n;
             }
         $js_hidden_sections .= '});'.n;
@@ -1279,18 +1279,18 @@ function bot_wtc()
 
         $js_do_refresh =
             '$(document).ready(function() {'.n.
-        // Call cleanUp function on successful async save
+            // Call cleanUp function on successful async save
             '    textpattern.Relay.register("txpAsyncForm.success", botWtcDoRefresh);'.n.
 
-        // CUSTOMIZE function
+            // CUSTOMIZE function
             '    function botWtcDoCustomize() {'.n.
-                    // Position, class and hide rules
-                    bot_wtc_jquery_rows().n.
+                     // Position, class and hide rules
+                     bot_wtc_jquery_rows().n.
             '    }'.n.
-                // Run once after page load
+                 // Run once after page load
             '    botWtcDoCustomize();'.n.
 
-        // CLEANUP function (called after async save)
+            // CLEANUP function (called after async save)
             '    function botWtcDoRefresh() {'.n.
                     // Clean up all elements outside their original containers
                     bot_wtc_jquery_cleanrefresh_rows().n.
