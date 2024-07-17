@@ -1319,7 +1319,74 @@ function bot_wtc()
             echo '<script>' . $js_do_refresh . '</script>';
         }
     }
+
+    // User-supplied javascript (can contain other tags)
     if ($bot_wtc_script) {
-        echo n.$bot_wtc_script.n;
+        // Split out script, style and link tags and add nonce to each
+        if (class_exists('\Textpattern\UI\Script')) {
+            $bot_wtc_html = new DOMDocument();
+            $bot_wtc_html->loadHTML($bot_wtc_script);
+
+            foreach($bot_wtc_html->getElementsByTagName('*') as $node) {
+
+                switch($node->nodeName) {
+                    case 'html':
+                    case 'head':
+                        // Skip headers created by DOMDocument
+                        break;
+                    case 'style':
+                        // Add nonce to <style>…</style> tags
+                        echo Txp::get('\Textpattern\UI\Style')->setContent($node->nodeValue).n;
+                        break;
+                    case 'link':
+                        if ($node->getAttribute('rel') === 'stylesheet') {
+                            // Add nonce to <link rel="stylesheet" href="…"> tags
+                            $link_output = new \Textpattern\UI\Style();
+                            foreach ($node->attributes as $attr) {
+                                if ($attr->nodeName === 'href') {
+                                    $link_output->setSource($attr->nodeValue);
+                                } elseif ($attr->nodeValue === $attr->nodeName) {
+                                    // boolean (single-word) attributes
+                                    $link_output->setBool($attr->nodeName);
+                                } else {
+                                    // regular attr="value" attributes like media="screen"
+                                    $link_output->setAtt($attr->nodeName, $attr->nodeValue);
+                                }
+                            }
+                            echo $link_output;
+                        } else {
+                            // Pass-through regular <link rel="something else" …> tags
+                            echo $bot_wtc_html->saveHTML($node);
+                        }
+                        break;
+                    case 'script':
+                        if ($node->hasAttribute('src')) {
+                            // Add nonce to <script src="…"></script> tags
+                            $script_output = new \Textpattern\UI\Script();
+                            foreach ($node->attributes as $attr) {
+                                if ($attr->nodeName === 'src') {
+                                    $script_output->setSource($attr->nodeValue);
+                                } elseif ($attr->nodeValue === $attr->nodeName) {
+                                    // boolean attributes like defer async module
+                                    $script_output->setBool($attr->nodeName);
+                                } else {
+                                    // regular attr="value" attributes
+                                    $script_output->setAtt($attr->nodeName, $attr->nodeValue);
+                                }
+                            }
+                            echo $script_output;
+                        } else {
+                            // Add nonce to <script>…</script> tags
+                            echo Txp::get('\Textpattern\UI\Script')->setContent($node->nodeValue).n;
+                        }
+                        break;
+                    default:
+                        // Pass-through all other tags (DOM nodes)
+                        echo $bot_wtc_html->saveHTML($node);
+                }
+            }
+        } else {
+            echo n.$bot_wtc_script.n;
+        }
     };
 }
