@@ -915,50 +915,55 @@ function bot_wtc_tab($event, $step, $msg='')
     $bot_jquery_snippet = '<script>\n    $(document).ready(function() {\n        // your code here\n    });\n<\/script>\n';
     $bot_js_snippet = '<script src=\"path_to_script\"><\/script>\n';
 
+    $js = <<<EOJQUERY
+$(document).ready(function() {
+    $("div.bot_collapse").hide();
+    $("section#bot_advanced").hide();
+    $("a.bot_push").on("click", function() {
+        $(this).toggleClass("bot_arrow").parent().next().slideToggle("fast");
+        $(this).children(".ui-icon").toggleClass("ui-icon-caret-1-s").toggleClass("ui-icon-caret-1-n");
+        return false;
+    });
+    $("#bot_collapse_all").on("click", function() {
+        $("div.bot_collapse").slideUp("fast").parent().find(".ui-icon").removeClass("ui-icon-caret-1-n").addClass("ui-icon-caret-1-s");
+        return false;
+    });
+    $("#bot_expand_all").on("click", function() {
+        $("div.bot_collapse").slideDown("fast").parent().find(".ui-icon").removeClass("ui-icon-caret-1-s").addClass("ui-icon-caret-1-n");
+        return false;
+    });
+    $("#bot_advanced_open").on("click", function() {
+        $("section#bot_advanced").slideToggle("fast");
+        $("div#bot_main").toggle("fast");
+        return false;
+    });
+    $("a.bot_all").on("click", function() {
+        $(this).parent().parent().find("input").prop("checked", true);
+        return false;
+    });
+    $("a.bot_none").on("click", function() {
+        $(this).parent().parent().find("input").prop("checked", false);
+        return false;
+    });
+    $("#bot_jq_link").on("click", function() {
+        var areaValue = $("#bot_wtc_script").val();
+        $("#bot_wtc_script").val(areaValue + "$bot_jquery_snippet");
+        return (false);
+    });
+    $("#bot_js_link").on("click", function() {
+        var areaValue = $("#bot_wtc_script").val();
+        $("#bot_wtc_script").val(areaValue + "$bot_js_snippet");
+        return (false);
+    });
+});
+EOJQUERY;
+
     // Add jquery action
-    echo
-    '<script>'.n.
-    '    $(document).ready(function() {'.n.
-            '$("div.bot_collapse").hide()'.n.
-            '$("section#bot_advanced").hide()'.n.
-            '$("a.bot_push").on("click", function(){'.n.
-            '  $(this).toggleClass("bot_arrow").parent().next().slideToggle("fast");'.n.
-            '  $(this).children(".ui-icon").toggleClass("ui-icon-caret-1-s").toggleClass("ui-icon-caret-1-n");'.n.
-            '  return false;'.n.
-            '});'.n.
-            '$("#bot_collapse_all").on("click", function(){'.n.
-            '  $("div.bot_collapse").slideUp("fast").parent().find(".ui-icon").removeClass("ui-icon-caret-1-n").addClass("ui-icon-caret-1-s");'.n.
-            '  return false;'.n.
-             '});'.n.
-            '$("#bot_expand_all").on("click", function(){'.n.
-            '  $("div.bot_collapse").slideDown("fast").parent().find(".ui-icon").removeClass("ui-icon-caret-1-s").addClass("ui-icon-caret-1-n");'.n.
-            '  return false;'.n.
-             '});'.n.
-            '$("#bot_advanced_open").on("click", function(){'.n.
-            '  $("section#bot_advanced").slideToggle("fast");'.n.
-            '  $("div#bot_main").toggle("fast");'.n.
-            '  return false;'.n.
-             '});'.n.
-            '$("a.bot_all").on("click", function(){'.n.
-            '  $(this).parent().parent().find("input").prop("checked", true);'.n.
-            '  return false;'.n.
-            '});'.n.
-            '$("a.bot_none").on("click", function(){'.n.
-            '  $(this).parent().parent().find("input").prop("checked", false);'.n.
-            '  return false;'.n.
-            '});'.n.
-            '$("#bot_jq_link").on("click", function(){'.n.
-            '  var areaValue = $("#bot_wtc_script").val();'.n.
-            '  $("#bot_wtc_script").val(areaValue + "'.$bot_jquery_snippet.'");'.n.
-            '  return(false);'.n.
-            '});'.n.
-            '$("#bot_js_link").on("click", function(){'.n.
-            '  var areaValue = $("#bot_wtc_script").val();'.n.
-            '  $("#bot_wtc_script").val(areaValue + "'.$bot_js_snippet.'");'.n.
-            '  return(false);'.n.
-            '});'.n.
-    '    });'.n.
-    '</script>';
+    if (class_exists('\Textpattern\UI\Script')) {
+        echo Txp::get('\Textpattern\UI\Script')->setContent($js);
+    } else {
+        echo '<script>' . $js . '</script>';
+    }
 }
 
 
@@ -973,8 +978,7 @@ function bot_wtc_css()
 {
     global $event;
 
-    echo '<style>
-
+    $styles = <<<EOCSS
     #bot_wtc_table {
         padding: 10px 0 20px;
         margin-left: 0;
@@ -1054,8 +1058,13 @@ function bot_wtc_css()
         padding-top: 5px;
         padding-bottom: 10px;
     }
+EOCSS;
 
-</style>';
+    if (class_exists('\Textpattern\UI\Style')) {
+        echo Txp::get('\Textpattern\UI\Style')->setContent($styles);
+    } else {
+        echo '<style>' . $styles . '</style>';
+    }
 }
 
 
@@ -1090,13 +1099,15 @@ function bot_hide_per_section_array()
 function bot_wtc_jquery_hide_sections_rows()
 {
     $bot_hide_per_section = bot_hide_per_section_array();
+    $js_hide_per_section = '';
     foreach ($bot_hide_per_section as $section => $fields) {
-        echo n.'            if (value=="'.$section.'"){'.n;
+        $js_hide_per_section .= n.'            if (value=="'.$section.'"){'.n;
         for ($i =0; $i<count($fields); $i++) {
-            echo '                '.$fields[$i].'.hide();'.n;
+            $js_hide_per_section .= '                '.$fields[$i].'.hide();'.n;
         }
-        echo '            }'.n;
+        $js_hide_per_section .= '            }'.n;
     }
+    return $js_hide_per_section;
 }
 
 
@@ -1113,9 +1124,11 @@ function bot_wtc_jquery_restore_rows()
         }
     }
     $out = array_unique($out);
+    $js_out = '';
     foreach ($out as $value) {
-        echo '            '.$value.'.show();'.n;
+        $js_out .= '            '.$value.'.show();'.n;
     }
+    return $js_out;
 }
 
 
@@ -1133,19 +1146,22 @@ function bot_hide_per_section()
     $bot_hide_per_section = bot_hide_per_section_array();
     // Output js only if values exist
     if ($bot_hide_per_section) {
-        echo
-                '<script>'.n.
-                '    $(document).ready(function() {'.n;
-        echo
-                '        $("select#section").on("change", function(){'.n;
-        bot_wtc_jquery_restore_rows();
-        echo
-                '            var value = $("select#section").val();';
-        bot_wtc_jquery_hide_sections_rows();
-        echo
-                '        }).trigger("change");'.n.
-                '    });'.n.
-                '</script>';
+
+        $js_hide_per_section =
+            '$(document).ready(function() {'.n.
+            '    $("select#section").on("change", function(){'.n.
+                     bot_wtc_jquery_restore_rows().n.
+            '        var value = $("select#section").val();'.n.
+                     bot_wtc_jquery_hide_sections_rows().n.
+            '    }).trigger("change");'.n.
+            '});'.n;
+
+        // Add jquery action
+        if (class_exists('\Textpattern\UI\Script')) {
+            echo Txp::get('\Textpattern\UI\Script')->setContent($js_hide_per_section);
+        } else {
+            echo '<script>' . $js_hide_per_section . '</script>';
+        }
     }
 }
 
@@ -1167,15 +1183,20 @@ function bot_hidden_sections()
     // Output js only if values exist
     if ($bot_hidden_sections) {
         $sections = explode("|", $bot_hidden_sections);
-        echo
-        '<script>'.n.
-        '    $(document).ready(function() {'.n;
+
+        $js_hidden_sections =
+            '$(document).ready(function() {'.n;
         foreach ($sections as $value) {
-            echo    '           $("select#section option:not(:selected)[value=\''.$value.'\']").remove();'.n;
+                $js_hidden_sections .= '       $("select#section option:not(:selected)[value=\''.$value.'\']").remove();'.n;
+            }
+        $js_hidden_sections .= '});'.n;
+
+        // Add jquery action
+        if (class_exists('\Textpattern\UI\Script')) {
+            echo Txp::get('\Textpattern\UI\Script')->setContent($js_hidden_sections);
+        } else {
+            echo '<script>' . $js_hidden_sections . '</script>';
         }
-        echo
-        '    });'.n.
-        '</script>';
     }
 }
 
@@ -1255,26 +1276,26 @@ function bot_wtc()
 
     // Output code only if a preference is saved
     if (isset($position) || isset($class)) {
-        echo
-        '<script>'.n.
-        '    $(document).ready(function() {'.n.
+
+        $js_do_refresh =
+            '$(document).ready(function() {'.n.
         // Call cleanUp function on successful async save
-        '       textpattern.Relay.register("txpAsyncForm.success", botWtcDoRefresh);'.n.
+            '    textpattern.Relay.register("txpAsyncForm.success", botWtcDoRefresh);'.n.
 
         // CUSTOMIZE function
-        '       function botWtcDoCustomize() {'.n.
+            '    function botWtcDoCustomize() {'.n.
                     // Position, class and hide rules
                     bot_wtc_jquery_rows().n.
-        '       }'.n.
+            '    }'.n.
                 // Run once after page load
-        '       botWtcDoCustomize();'.n.
+            '    botWtcDoCustomize();'.n.
 
         // CLEANUP function (called after async save)
-        '       function botWtcDoRefresh() {'.n.
+            '    function botWtcDoRefresh() {'.n.
                     // Clean up all elements outside their original containers
                     bot_wtc_jquery_cleanrefresh_rows().n.
                     // Clean up all duplicate custom fields outside the custom fields group
-        '           $("#txp-custom-field-group-content").find(".custom-field").each(function(){
+            '       $("#txp-custom-field-group-content").find(".custom-field").each(function(){
                         var pattern = /\bcustom-[0-9]+\b/;
                         var matchResult = $(this).attr("class").match(pattern);
                         if (matchResult && $("."+matchResult[0]).length > 1) {
@@ -1283,14 +1304,20 @@ function bot_wtc()
                         }
                     })'.n.
                     // (Re-)perform write tab customize
-        '           botWtcDoCustomize();'.n.
+            '       botWtcDoCustomize();'.n.
                     // Get selected section and use it to effect section change
                     // to trigger hide by section rules
-        '           var value = $("select#section").val();'.n.
-        '           $("select#section").val(value).change();'.n.
-        '       }'.n.
-        '    });'.n.
-        '</script>';
+            '       var value = $("select#section").val();'.n.
+            '       $("select#section").val(value).trigger("change");'.n.
+            '    }'.n.
+            ' });'.n;
+
+        // Add jquery action
+        if (class_exists('\Textpattern\UI\Script')) {
+            echo Txp::get('\Textpattern\UI\Script')->setContent($js_do_refresh);
+        } else {
+            echo '<script>' . $js_do_refresh . '</script>';
+        }
     }
     if ($bot_wtc_script) {
         echo n.$bot_wtc_script.n;
