@@ -959,10 +959,6 @@ function bot_wtc_tab($event, $step, $msg='')
 function bot_wtc_css()
 {
     global $event;
-    // Output css only in 'bot_wtc' extensions tab.
-    if ($event != 'bot_wtc_tab') {
-        return;
-    }
 
     echo '<style>
 
