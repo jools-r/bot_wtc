@@ -1,6 +1,5 @@
 <?php
-
-if (@txpinterface == 'admin') {
+if (txpinterface === 'admin') {
 
     global $event;
 
@@ -336,7 +335,7 @@ function bot_wtc_welcome($evt, $stp)
 function bot_wtc_install()
 {
     // Create the bot_wtc table
-    safe_create('bot_wtc', '
+    safe_create('bot_wtc', "
         id            INT          NOT NULL AUTO_INCREMENT,
         item          VARCHAR(255) NOT NULL,
         position      VARCHAR(255) NOT NULL,
@@ -344,7 +343,7 @@ function bot_wtc_install()
         sections      TEXT         NOT NULL,
         class         VARCHAR(255) NOT NULL,
         PRIMARY KEY (id)
-    ');
+    ");
 
     // Set pref entries in txp_prefs table
     set_pref('bot_wtc_script', '', 'bot_wtc_', '2');
@@ -664,7 +663,7 @@ function bot_wtc_tab($event, $step, $msg='')
                         // Check if item is different from destination
                         if ($item[$i] != $item_destination[$i]) {
                             safe_update(
-                                "bot_wtc",
+                                'bot_wtc',
                                 "position = '".doslash($item_position[$i])."',
                                  destination = '".doslash($item_destination[$i])."',
                                  item = '".doslash($item[$i])."',
@@ -753,10 +752,8 @@ function bot_wtc_tab($event, $step, $msg='')
                         $bot_adv_sections_string = implode('|', $bot_adv_sections);
                     }
                     safe_upsert(
-                        "bot_wtc",
-                        "sections = '"
-                        .doslash($bot_adv_sections_string)
-                        ."'",
+                        'bot_wtc',
+                        "sections = '".doslash($bot_adv_sections_string)."'",
                         "item = '".doslash($item)."'"
                     );
                 }
@@ -781,10 +778,8 @@ function bot_wtc_tab($event, $step, $msg='')
                         $bot_adv_classes_string = $bot_adv_class;
                     }
                     safe_upsert(
-                        "bot_wtc",
-                        "class = '"
-                        .doslash($bot_adv_classes_string)
-                        ."'",
+                        'bot_wtc',
+                        "class = '".doslash($bot_adv_classes_string)."'",
                         "item = '".doslash($item)."'"
                     );
                 }
@@ -830,7 +825,6 @@ function bot_wtc_tab($event, $step, $msg='')
 
     // What to show when accessing tab
     if (bot_wtc_check_install()) {
-
         // Fetch prefs value for bot_wtc_script
         $bot_wtc_script = safe_field('val', 'txp_prefs', 'name = "bot_wtc_script"');
 
@@ -887,7 +881,7 @@ function bot_wtc_tab($event, $step, $msg='')
                     n.'<a id="bot_js_link" href="#"><span class="ui-icon ui-icon-circlesmall-plus"></span> '.gTxt('bot_wtc_add_external_script').'</a>'.
                     n.'<a id="bot_jq_link" href="#"><span class="ui-icon ui-icon-circlesmall-plus"></span> '.gTxt('bot_wtc_add_inline_code').'</a>'.
                     n.'</div>'.
-                    n.'<textarea id="bot_wtc_script" name="bot_wtc_script" cols="60" rows="10">'.$bot_wtc_script.'</textarea>'. // script textarea
+                    n.'<textarea id="bot_wtc_script" class="code" name="bot_wtc_script" cols="60" rows="10">'.$bot_wtc_script.'</textarea>'. // script textarea
                     n.bot_update_button(),
                 'bot_js_box-details',
                 'bot_wtc_add_javascript_group',
