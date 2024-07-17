@@ -338,10 +338,10 @@ function bot_wtc_install()
     safe_create('bot_wtc', "
         id            INT          NOT NULL AUTO_INCREMENT,
         item          VARCHAR(255) NOT NULL,
-        position      VARCHAR(255) NOT NULL,
-        destination   VARCHAR(255) NOT NULL,
+        position      VARCHAR(255) NOT NULL DEFAULT '',
+        destination   VARCHAR(255) NOT NULL DEFAULT '',
         sections      TEXT         NOT NULL,
-        class         VARCHAR(255) NOT NULL,
+        class         VARCHAR(255) NOT NULL DEFAULT '',
         PRIMARY KEY (id)
     ");
 
@@ -364,7 +364,7 @@ function bot_wtc_deinstall()
 
 
 // ===========================================================
-// Updates cfs selectors in db
+// Updates tables and cf selectors in db
 
 function bot_wtc_update()
 {
@@ -372,7 +372,20 @@ function bot_wtc_update()
     if (!bot_wtc_check_install()) {
         return;
     }
-    safe_alter('bot_wtc', 'CHANGE sections sections TEXT', 0);
+
+    // update MySQL DATA_TYPE for 'sections' column if not already set
+    if (getThing("SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE table_schema = DATABASE() and table_name = 'bot_wtc' AND column_name ='sections'") != 'text') {
+        safe_alter('bot_wtc', "MODIFY COLUMN sections TEXT NOT NULL");
+    }
+
+    // update MySQL DEFAULT for 'position', 'destination' and 'class' columns if not already set
+    $columns = array('position', 'destination', 'class');
+    foreach($columns as $colname) {
+        if (is_null(getThing("SELECT COLUMN_DEFAULT FROM INFORMATION_SCHEMA.COLUMNS WHERE table_schema = DATABASE() and table_name = 'bot_wtc' AND column_name ='".$colname."'"))) {
+            safe_alter('bot_wtc', "ALTER COLUMN ".$colname." SET DEFAULT ''");
+        }
+    }
+
     $db_values = bot_wtc_fetch_db(); // array
     for ($i =0; $i < count($db_values); $i++) {
         $id = $db_values[$i]['id'];
