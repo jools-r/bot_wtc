@@ -815,8 +815,10 @@ function bot_wtc_tab($event, $step, $msg='')
         if ($static_sections || (empty($static_sections) && !empty($db_static_sections)) ) {
             if ($static_sections) {
                 $static_sections_string = implode('|', $static_sections);
-            }
+                if (!empty($static_sections_string)) {
             safe_update('txp_prefs', 'val= "'.doslash($static_sections_string).'", html="text_input" ', 'name = "bot_wtc_static_sections"');
+                }
+            }
         }
 
         // Updates script prefs
