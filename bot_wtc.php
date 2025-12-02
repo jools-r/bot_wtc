@@ -436,6 +436,10 @@ function bot_wtc_check_install()
 function bot_all_items_selectinput()
 {
     global $bot_items;
+    if (!isset($bot_items) || !is_array($bot_items)) {
+        $bot_items = [];
+    }
+
     // Get cfs array in the form: cf_selector => cf_name
     $cfs = bot_get_cfs();
     // Final values for the txp function selectInput (including cfs if any)
