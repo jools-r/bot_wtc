@@ -211,7 +211,7 @@ function bot_wtc_insert_in_main_array($title, $selector)
     } else {
         $title = gTxt($title); // Gets the title to allow translation
     }
-    $bot_items [$selector] = gTxt($title);
+    $bot_items[$selector] = gTxt($title);
     return $bot_items;
 }
 
